@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>背景切替テスト</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      filter: blur(10px);
+      transition: opacity 0.5s ease-in-out;
+      z-index: -1;
+    }
+    .photo {
+      width: 200px;
+      margin: 20px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .photo:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="background"></div>
+  <img id="photo1" class="photo" src="https://source.unsplash.com/200x200/?nature" data-bg="https://source.unsplash.com/1600x900/?nature,blur" alt="Nature">
+  <img id="photo2" class="photo" src="https://source.unsplash.com/200x200/?city" data-bg="https://source.unsplash.com/1600x900/?city,blur" alt="City">
+  <img id="photo3" class="photo" src="https://source.unsplash.com/200x200/?ocean" data-bg="https://source.unsplash.com/1600x900/?ocean,blur" alt="Ocean">
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const background = document.getElementById("background");
+      const photos = document.querySelectorAll(".photo");
+      photos.forEach(photo => {
+        photo.addEventListener("mouseenter", () => {
+          const newBg = photo.getAttribute("data-bg");
+          if (newBg) {
+            background.style.backgroundImage = `url(${newBg})`;
+            background.style.opacity = "0.8";
+          }
+        });
+        photo.addEventListener("mouseleave", () => {
+          background.style.opacity = "0";
+        });
+      });
+    });
+  </script>
+</body>
+</html>
